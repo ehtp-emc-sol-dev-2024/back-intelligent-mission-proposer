@@ -1,0 +1,37 @@
+const express = require('express');
+const app = express();
+
+app.use(express.json()); // Parse JSON request body
+
+// Define missions
+const missions = [
+  { id: 1, name: 'Data Analysis Project', requiredSkills: ['Python', 'SQL', 'Excel', 'Statistics', 'Data Modeling'] },
+  { id: 2, name: 'Web Development', requiredSkills: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'React'] },
+  { id: 3, name: 'Cloud Migration', requiredSkills: ['AWS', 'Azure', 'Docker', 'Kubernetes', 'Linux'] },
+  { id: 4, name: 'Mobile App Development', requiredSkills: ['Java', 'Kotlin', 'Android', 'iOS', 'Swift'] },
+  { id: 5, name: 'DevOps Pipeline Setup', requiredSkills: ['Jenkins', 'Docker', 'Git', 'CI/CD', 'Linux'] },
+  { id: 6, name: 'Machine Learning Project', requiredSkills: ['Python', 'TensorFlow', 'Pandas', 'Deep Learning', 'Statistics'] },
+  { id: 7, name: 'Database Optimization', requiredSkills: ['SQL', 'NoSQL', 'PostgreSQL', 'MongoDB', 'Database Design'] },
+  { id: 8, name: 'Cybersecurity Audit', requiredSkills: ['Penetration Testing', 'Firewalls', 'Security Auditing', 'Linux', 'Networking'] },
+  { id: 9, name: 'Game Development', requiredSkills: ['Unity', 'C#', '3D Modeling', 'Animation', 'Game Design'] },
+  { id: 10, name: 'eCommerce Platform', requiredSkills: ['Shopify', 'JavaScript', 'React', 'Node.js', 'Payment Gateways'] },
+];
+
+// POST route to suggest missions based on skills
+app.post('/suggest-missions', (req, res) => {
+  const { skills } = req.body;
+  if (!skills || !Array.isArray(skills)) {
+    return res.status(400).send('Invalid request. Please provide a list of skills.');
+  }
+
+  const matchingMissions = missions.filter(mission => {
+    const matchedSkills = mission.requiredSkills.filter(skill => skills.includes(skill));
+    return matchedSkills.length >= 2; // Match missions with at least 2 skills
+  });
+
+  res.json(matchingMissions);
+});
+
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
+});
