@@ -17,6 +17,10 @@ const missions = [
   { id: 10, name: 'eCommerce Platform for Shopify-56ZX', requiredSkills: ['Shopify', 'JavaScript', 'React', 'Node.js', 'Payment Gateways'] }
 ];
 
+// GET route to return all available missions
+app.get('/missions', (req, res) => {
+  res.json(missions);
+});
 
 // POST route to suggest missions based on skills
 app.post('/suggest-missions', (req, res) => {
